@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Book from './Book'
-import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from '../Utils/BooksAPI'
 import PropTypes from 'prop-types'
 
 class SearchBooks extends Component {
+  static propTypes = {
+    myBooks: PropTypes.array.isRequired,
+    onBookUpdate: PropTypes.func.isRequired
+  }
   state = {
     query: '',
     books: []
