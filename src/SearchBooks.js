@@ -7,11 +7,45 @@ import PropTypes from 'prop-types'
 class SearchBooks extends Component {
   state = {
     query: '',
-    searchResults: []
+    books: []
   }
   handleChange = (query) => {
     this.setState({ query })
-    // this.bookSearch(query)
+    this.bookSearch(query)
+  }
+  
+  changeBookShelf = (books) => {
+    let all_Books = this.props.myBooks
+    for (const book of books) {
+      book.shelf = "none"
+    }
+
+    for (const book of books) {
+      for (const b of all_Books) {
+        if (b.id === book.id) {
+          book.shelf = b.shelf
+        }
+      }
+    }
+    return books
+  }
+
+  bookSearch = (query) => {
+    if (query) {
+      BooksAPI.search(query, 10)
+        .then((books) => {
+          if (books.length) {
+            books = this.changeBookShelf(books)
+            this.setState({ books })
+          }
+        })
+    } else {
+      this.setState({ books: [], query: ''})
+    }
+  }
+
+  addBook = (book, shelf) => {
+    this.props.onBookUpdate(book, shelf)
   }
   render () {
     return (
@@ -26,7 +60,10 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className='search-books-results'>
-          <ol className='books-grid' />
+          <ol className='books-grid'>
+          {this.state.query && 
+            this.state.books.map((book, index) => (<Book book={book} key={index} onUpdate={(shelf) => (this.addBook(book, shelf))}/>))}
+          </ol>
         </div>
       </div>
     )
