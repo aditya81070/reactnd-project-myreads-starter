@@ -16,11 +16,11 @@ class SearchBooks extends Component {
   
   changeBookShelf = (books) => {
     let all_Books = this.props.myBooks
-    for (const book of books) {
+    for (let book of books) {
       book.shelf = "none"
     }
 
-    for (const book of books) {
+    for (let book of books) {
       for (const b of all_Books) {
         if (b.id === book.id) {
           book.shelf = b.shelf
@@ -29,7 +29,7 @@ class SearchBooks extends Component {
     }
     return books
   }
-
+  
   bookSearch = (query) => {
     if (query) {
       BooksAPI.search(query, 10)
