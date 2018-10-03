@@ -22,7 +22,7 @@ class ListBooks extends Component {
                 ['Currently Reading', 'currentlyReading'],
                 ['Want To Read', 'wantToRead'],
                 ['Read', 'read']
-              ].map((arr) => (<BookShelf title={arr[0]} 
+              ].map((arr) => (<BookShelf title={arr[0]} key={arr[1]}
                   onChangeShelf={this.props.onBookUpdate} 
                   books={books.filter((book) => (book.shelf === `${arr[1]}`))}/>))
             }
