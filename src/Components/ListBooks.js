@@ -17,9 +17,15 @@ class ListBooks extends Component {
         </div>
         <div className='list-books-content'>
           <div>
-            <BookShelf title='Currently Reading' onChangeShelf={this.props.onBookUpdate} books={books.filter((book) => (book.shelf === 'currentlyReading'))} />
-            <BookShelf title='Want To Read' onChangeShelf={this.props.onBookUpdate} books={books.filter((book) => (book.shelf === 'wantToRead'))} />
-            <BookShelf title='Read' onChangeShelf={this.props.onBookUpdate} books={books.filter((book) => (book.shelf === 'read'))} />
+            {
+              [
+                ['Currently Reading', 'currentlyReading'],
+                ['Want To Read', 'wantToRead'],
+                ['Read', 'read']
+              ].map((arr) => (<BookShelf title={arr[0]} 
+                  onChangeShelf={this.props.onBookUpdate} 
+                  books={books.filter((book) => (book.shelf === `${arr[1]}`))}/>))
+            }
           </div>
         </div>
         <div className='open-search'>
