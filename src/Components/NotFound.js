@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function NotFound (props) {
+function NotFound () {
   return (
     <div id='notfound'>
       <div class='notfound'>
