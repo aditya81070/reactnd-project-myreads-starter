@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Book from './Book'
+import NotFound from './NotFound'
 import * as BooksAPI from '../Utils/BooksAPI'
 import PropTypes from 'prop-types'
 
@@ -11,7 +12,8 @@ class SearchBooks extends Component {
   }
   state = {
     query: '',
-    books: []
+    books: [],
+    error: ''
   }
   handleChange = (query) => {
     this.setState({ query })
@@ -41,7 +43,9 @@ class SearchBooks extends Component {
           if (books.length) {
             books = books.filter((book) => (book.imageLinks))
             books = this.changeBookShelf(books)
-            this.setState({ books })
+            this.setState({ books, error: '' })
+          } else {
+            this.setState({ books: [], error: 'error' })
           }
         })
     } else {
@@ -68,6 +72,9 @@ class SearchBooks extends Component {
           <ol className='books-grid'>
           {this.state.query && 
             this.state.books.map((book, index) => (<Book book={book} key={index} onUpdate={(shelf) => (this.addBook(book, shelf))}/>))}
+          {
+            this.state.error && <NotFound />
+          }
           </ol>
         </div>
       </div>
